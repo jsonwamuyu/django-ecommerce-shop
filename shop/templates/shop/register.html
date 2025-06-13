@@ -1,21 +1,38 @@
-{% extends "shop/base.html" %}
+{% extends 'shop/base.html' %}
 {% load static %}
-{% block title %}Sign Up{% endblock %}
+
+{% block title %}Login{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h2>Sign Up</h2>
-    <form method="post" action="{% url 'shop:register' %}">
+
+<div class="container bg-white flex gap-8 flex-col mx-auto w-full md:max-w-[450px] p-8 my-16 shadow-md ">
+    <h2 class="text-5xl font-semibold">Signup</h2>
+    <form method="post" action="{% url 'shop:register' %}" class="flex flex-col gap-4" novalidate>
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Sign Up</button>
+        
+        <div class="">
+            <label for="{{ form.username.id_for_label }}" class="block text-gray-600 text-sm mb-1">Username</label>
+            {{ form.username }}
+        </div>
+
+        <div class="">
+        <label for="{{ form.password1.id_for_label }}" class="block text-gray-600 text-sm mb-1">Password</label>
+        {{ form.password1 }}
+        </div>
+
+        <div class="">
+        <label for="{{ form.password2.id_for_label }}" class="block text-gray-600 text-sm mb-1">Confirm Password</label>
+        {{ form.password2 }}
+        </div>
+
+        <button class="bg-indigo-600 font-bold py-2 px-3  rounded hover:bg-indigo-700 cursor-pointer  text-white" type="submit">Signup</button>
     </form>
-    <p>Already have an account? <a href="{% url 'shop:login' %}">Login here</a></p>
+    <p class="text-sm text-gray-600">Already have an account? <a href="{% url 'shop:login' %}" class="text-indigo-600 font-semibold hover:text-indigo-700">Login</a></p> 
 
     {% if error_message %}
         <div class="error">
-            <p>{{ error_message }}</p>
+            <p class="text-sm">{{ error_message }}</p>
         </div>
-    {% endif %} 
+    {% endif %}
 </div>
 {% endblock %}

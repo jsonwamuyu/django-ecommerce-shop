@@ -5,18 +5,31 @@
 
 {% block content %}
 
-<div class="container">
-    <h2>Login</h2>
-    <form method="post" action="{% url 'shop:login' %}">
+<div class="container bg-white flex gap-8 flex-col mx-auto w-full md:max-w-[450px] p-8 my-16 shadow-md ">
+    <h2 class="text-5xl font-semibold">Login</h2>
+    <form method="post" action="{% url 'shop:login' %}" class="flex flex-col gap-4">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
+        
+
+         <div class="">
+            <label for="id_username" class="block text-gray-600 text-sm mb-1">Username</label>
+            <input type="text" name="username" id="id_username" required
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
+        </div>
+
+        <div class="mb-4">
+            <label for="id_password" class="block text-gray-600 text-sm mb-1">Password</label>
+            <input type="password" name="password" id="id_password" required
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
+        </div>
+
+        <button class="bg-indigo-600 font-bold py-2 px-3  rounded hover:bg-indigo-700 cursor-pointer  text-white" type="submit">Login</button>
     </form>
-    <p>Don't have an account? <a href="{% url 'shop:register' %}">Sign Up</a></p> 
+    <p class="text-sm text-gray-600">Don't have an account? <a href="{% url 'shop:register' %}" class="text-indigo-600 font-semibold hover:text-indigo-700">Sign Up</a></p> 
 
     {% if error_message %}
         <div class="error">
-            <p>{{ error_message }}</p>
+            <p class="text-sm">{{ error_message }}</p>
         </div>
     {% endif %}
 </div>

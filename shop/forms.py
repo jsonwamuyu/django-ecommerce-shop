@@ -11,13 +11,16 @@ class CustomUserCreationForm(UserCreationForm):
             'username': forms.TextInput(attrs={
                 'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
                 'placeholder': 'Username',
-            }),
-            'password1': forms.PasswordInput(attrs={
-                'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
-                'placeholder': 'Password',
-            }),
-            'password2': forms.PasswordInput(attrs={
-                'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
-                'placeholder': 'Confirm Password',
-            }),
+            })
         }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Add Tailwind classes to password fields explicitly
+        self.fields['password1'].widget.attrs.update({
+            'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
+            
+        })
+        self.fields['password2'].widget.attrs.update({
+            'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
+            
+        })

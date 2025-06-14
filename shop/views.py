@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from .forms import CustomUserCreationForm
+from django.contrib.auth.decorators import login_required
 
 
 def register(request):
@@ -16,9 +17,19 @@ def register(request):
     return render(request, 'shop/register.html', {'form': form})
 
 
+@login_required
 def product_list(request):
     # This view should return a list of products
     # Assuming you have a Product model defined in models.py
     from .models import Product
     products = Product.objects.all()
     return render(request, 'shop/product_list.html', {'products': products})    
+
+
+@login_required
+def cart(request):
+    # This view should return the user's cart
+    # Assuming you have a Cart model defined in models.py
+    from .models import Cart
+    cart_items = Cart.objects.filter(user=request.user)
+    return render(request, 'shop/cart.html', {'cart_items': cart_items})

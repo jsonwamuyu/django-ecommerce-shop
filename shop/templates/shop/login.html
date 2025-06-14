@@ -9,7 +9,6 @@
     <h2 class="text-5xl font-semibold">Login</h2>
     <form method="post" action="{% url 'shop:login' %}" class="flex flex-col gap-4">
         {% csrf_token %}
-        
 
          <div class="">
             <label for="id_username" class="block text-gray-600 text-sm mb-1">Username</label>

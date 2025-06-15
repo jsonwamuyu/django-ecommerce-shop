@@ -13,7 +13,7 @@ def register(request):
             login(request, user)  # Log the user in immediately after signup
             return redirect('shop:product_list')  # Redirect to product list or homepage
     else:
-        form = CustomUserCreationForm(request.POST)
+        form = CustomUserCreationForm() # Initialize the form for GET request(unbound form) 
     return render(request, 'shop/register.html', {'form': form})
 
 

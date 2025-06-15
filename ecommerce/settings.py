@@ -52,9 +52,11 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-# TAILWIND_APP_NAME = 'theme'
+
+LOGIN_URL = '/login/'  # or use reverse_lazy('shop:login') if you prefer named URLs
 LOGIN_REDIRECT_URL = '/'  # Redirect after login
 LOGOUT_REDIRECT_URL = '/'  # Redirect after logout
+
 
 ROOT_URLCONF = "ecommerce.urls"
 

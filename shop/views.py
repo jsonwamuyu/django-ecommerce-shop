@@ -52,3 +52,9 @@ def edit_product(request, product_id):
         form = ProductForm(instance=product)
 
     return render(request, 'shop/edit_product.html', {'form': form, 'product': product})
+
+
+@login_required
+def product_details(request, product_id):
+    product = get_object_or_404(Product,id=product_id)
+    return render(request, 'shop/product_details.html', {'product': product})

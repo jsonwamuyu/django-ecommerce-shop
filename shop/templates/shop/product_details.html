@@ -1,0 +1,18 @@
+{% extends 'shop/base.html' %}
+
+{% load static %}
+
+{% block title %}
+    {{product.name}}
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <h3 class="font-bold text-4xl my-2 max-w-[460px]">{{product.product_name}}</h3>
+        <div class="w-full md:max-w-[460px]">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-96 object-cover rounded-lg mb-4">
+        </div
+    </div>
+
+{%endblock%}

@@ -10,6 +10,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(next_page='shop:product_list'), name='logout'),
     path('', views.product_list, name='product_list'),  # Default to product list
     path('cart/', views.cart, name='cart'),
-    
+
     path('edit_product/<int:product_id>/', views.edit_product, name='edit_product'),
+    path("product/<int:product_id>/", views.product_details, name="product_details")
 ]

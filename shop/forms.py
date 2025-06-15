@@ -36,3 +36,10 @@ class CustomUserCreationForm(UserCreationForm):
             existing_classes = self.fields[field_name].widget.attrs.get('class', '')
             if error_class.strip() not in existing_classes:
                 self.fields[field_name].widget.attrs['class'] = existing_classes + error_class
+
+
+from .models import Product
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ["product_name", "description", "price", "stock_quantity", "product_image"]

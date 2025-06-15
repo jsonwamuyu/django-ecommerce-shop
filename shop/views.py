@@ -1,8 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from .forms import CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
+
+from .models import Product
+from .forms import ProductForm
 
 
 def register(request):
@@ -33,3 +36,19 @@ def cart(request):
     from .models import Cart
     cart_items = Cart.objects.filter(user=request.user)
     return render(request, 'shop/cart.html', {'cart_items': cart_items})
+
+
+
+@login_required
+def edit_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == "POST":
+        form = ProductForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('shop:product_list', product_id=product.id)  # Redirect to the product list or detail page
+        # If the form is not valid, it will re-render the form with errors
+    else:
+        form = ProductForm(instance=product)
+
+    return render(request, 'shop/edit_product.html', {'form': form, 'product': product})

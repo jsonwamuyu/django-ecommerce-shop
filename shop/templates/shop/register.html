@@ -1,47 +1,72 @@
-{% extends 'shop/base.html' %}
+<!DOCTYPE html>
 {% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Signup</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex">
 
-{% block title %}Signup{% endblock %}
+  <!-- Left: Image -->
+  <div class="hidden md:block md:w-1/2">
+    <img 
+      src="{% static 'shop/images/shopping_mall.jpeg' %}" 
+      alt="Shopping Mall" 
+      class="object-cover w-full h-screen"
+      loading="lazy"
+    />
+  </div>
 
-{% block content %}
+  <!-- Right: Signup Form -->
+  <div class="flex flex-col justify-center w-full md:w-1/2 px-16 xl:px-24 bg-gray-50">
+    <h2 class="text-5xl font-semibold mb-6">Signup</h2>
 
-<div class="container bg-white flex gap-8 flex-col mx-auto w-full md:max-w-[450px] p-8 my-16 shadow-md ">
-    <h2 class="text-5xl font-semibold">Signup</h2>
     <form method="post" action="{% url 'shop:register' %}" class="flex flex-col gap-4" novalidate>
-        {% csrf_token %}
-        
-        <div class="">
-            <label for="{{ form.username.id_for_label }}" class="block text-gray-600 text-sm mb-1">Username</label>
-            {{ form.username }}
-            {%for error in form.username.errors %}
-                <p class="text-red-500 text-sm">{{ error }}</p>
-            {% endfor %}
-        </div>
+      {% csrf_token %}
 
-        <div class="">
-            <label for="{{ form.password1.id_for_label }}" class="block text-gray-600 text-sm mb-1">Password</label>
-            {{ form.password1 }}
-            {% for error in form.password1.errors %}
-                <p class="text-red-500 text-sm mt-1">{{ error }}</p>
-            {% endfor %}
-        </div>
+      <div>
+        <label for="{{ form.username.id_for_label }}" class="block text-gray-600 text-sm mb-1">Username</label>
+        {{ form.username }}
+        {% for error in form.username.errors %}
+          <p class="text-red-600 text-sm mt-1">{{ error }}</p>
+        {% endfor %}
+      </div>
 
-        <div class="">
+      <div>
+        <label for="{{ form.password1.id_for_label }}" class="block text-gray-600 text-sm mb-1">Password</label>
+        {{ form.password1 }}
+        {% for error in form.password1.errors %}
+          <p class="text-red-600 text-sm mt-1">{{ error }}</p>
+        {% endfor %}
+      </div>
+
+      <div class="mb-4">
         <label for="{{ form.password2.id_for_label }}" class="block text-gray-600 text-sm mb-1">Confirm Password</label>
         {{ form.password2 }}
         {% for error in form.password2.errors %}
-            <p class="text-red-500 text-sm mt-1">{{ error }}</p>
+          <p class="text-red-600 text-sm mt-1">{{ error }}</p>
         {% endfor %}
-        </div>
+      </div>
 
-        <button class="bg-[#FF9900] font-bold py-2 px-3 border-none outline-none  rounded hover:bg-[#E68A00] cursor-pointer  text-white" type="submit">Signup</button>
+      <button type="submit" class="bg-[#FF9900] font-bold py-2 px-3 rounded hover:bg-[#E68A00] cursor-pointer text-white border-none outline-none">
+        Signup
+      </button>
     </form>
-    <p class="text-sm text-gray-600">Already have an account? <a href="{% url 'shop:login' %}" class="text-[#FF9900] font-semibold hover:text-[#E68A00]">Login</a></p> 
+
+    <p class="text-sm text-gray-600 mt-8">
+      Already have an account? 
+      <a href="{% url 'shop:login' %}" class="text-[#FF9900] font-semibold hover:text-[#E68A00]">Login</a>
+    </p> 
 
     {% if error_message %}
-        <div class="error">
-            <p class="text-sm">{{ error_message }}</p>
-        </div>
+      <div class="mt-4 text-red-600 text-sm">
+        <p>{{ error_message }}</p>
+      </div>
     {% endif %}
-</div>
-{% endblock %}
+  </div>
+
+</body>
+</html>

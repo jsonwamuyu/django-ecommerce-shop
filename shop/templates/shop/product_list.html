@@ -7,22 +7,34 @@
 {% block content %}
 
 {% if products  %}
-<div class="container mx-auto p-4">
+<div>
     <h1 class="text-3xl font-bold mb-6">Product List</h1>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {% for product in products %}
-        <div class="bg-white rounded-lg shadow-md p-4">
-            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-48 object-cover rounded-t-lg mb-4">
-            <h2 class="text-xl font-semibold mb-2">{{ product.name }}</h2>
-            <p class="text-gray-600 mb-4">{{ product.description }}</p>
-            <p class="text-lg font-bold text-indigo-600">${{ product.price }}</p>
-            <a href="{% url 'shop:product_details' product.id %}" class="mt-4 inline-block bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">View Details</a>
-        </div>
+            <a href="{% url 'shop:product_details' product.id %}"  class="flex flex-col justify-between  bg-white rounded shadow hover:shadow-lg transition-shadow duration-300">
+                <img src="{{ product.product_image.url }}" alt="{{ product.name }}" class="w-full h-32 object-fit rounded-t">
+                <div class="px-2 pt-4">
+                    <p class="text-[#FF9900] mb-2">Ksh. <span class="font-bold">{{ product.price }}</span></p>
+                    <h4 class="text-lg font-medium">{{ product.product_name|truncatechars:20 }}</h4>
+                    <p class="text-gray-500 text-[14px] pb-2">{{ product.description|truncatechars:40 }}</p>
+                </div>
+                <form method="post" action="{% url 'shop:add_to_cart' product.id %} " class="px-2 pb-2">
+                    {% if product.stock_quantity <= 0 %}
+                        <button type="button" class="bg-gray-300 text-gray-600 py-2 px-4 rounded-full cursor-not-allowed font-semibold text-[12px]">Out of Stock</button>
+                    {% else %}
+
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ product.id }}">    
+                    <button type="submit" class="bg-[#FF9900] text-white py-2 px-4 rounded-full hover:bg-[#E68A00] transition duration-300 mt-2 font-semibold text-[12px]">Add to Cart</button>
+
+                    {% endif %}
+                </form>
+            </a>
         {% endfor %}
     </div>  
 </div>
 {% else %}
-<div class="container mx-auto p-4">
+<div>
     <h1 class="text-3xl font-bold mb-6">No Products Available</h1>
     <p class="text-gray-600">Currently, there are no products available in the store.</p>
 </div>

@@ -1,59 +1,81 @@
-{% extends 'shop/base.html' %}
+
+<!DOCTYPE html>
 {% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex">
 
-{% block title %}Login{% endblock %}
+ <!-- Left: Image -->
+  <div class="hidden md:block md:w-1/2">
+    <img 
+      src="{% static 'shop/images/shopping_mall.jpeg' %}" 
+      alt="Shopping Mall" 
+      class="object-cover w-full h-screen"
+      loading="lazy"
+    />
+  </div>
 
-{% block content %}
+  <!-- Right: Login Form -->
+  <div class="flex flex-col justify-center w-full md:w-1/2 px-16 xl:px-24 bg-gray-50">
+    <h2 class="text-5xl font-semibold mb-6">Login</h2>
 
-<div class="container bg-white flex gap-8 flex-col mx-auto w-full md:max-w-[450px] p-8 my-8 rounded-md shadow-md ">
-    <h2 class="text-4xl font-semibold">Login</h2>
-
-
-        {# Non-field Errors #}
     {% if form.non_field_errors %}
-        <div class=" p-2 bg-red-50 border border-red-200 text-red-400 rounded">
+      <div class="p-2 bg-red-50 border border-red-200 text-red-400 rounded mb-4">
         {% for error in form.non_field_errors %}
-            <p>{{ error }}</p>
+          <p>{{ error }}</p>
         {% endfor %}
-        </div>
+      </div>
     {% endif %}
-
 
     <form method="post" action="{% url 'shop:login' %}" class="flex flex-col gap-4" novalidate>
-        {% csrf_token %}
+      {% csrf_token %}
 
-         <div class="">
-            <label for="id_username" class="block text-gray-400 text-sm ">Username</label>
-            <input type="text" name="username" id="id_username" required
-            class="shadow-sm appearance-none border-[1px] rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-1 focus:ring-[#FF9900]/50
-            {% if form.username.errors %}border-red-500{% endif %}
-            "/>
+      <div>
+        <label for="id_username" class="block text-gray-600 text-sm mb-1">Username</label>
+        <input type="text" name="username" id="id_username" required
+          class="shadow-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-1 focus:ring-[#FF9900]/50
+          {% if form.username.errors %}border-red-500{% endif %}"
+        />
+        {% for error in form.username.errors %}
+          <p class="text-red-600 text-sm mt-1">{{ error }}</p>
+        {% endfor %}
+      </div>
 
-            {% for error in form.username.errors %}
-                <p class="text-red-600 text-sm mt-1">{{ error }}</p>
-            {% endfor %}
-        </div>
+      <div class="mb-4">
+        <label for="id_password" class="block text-gray-600 text-sm mb-1">Password</label>
+        <input type="password" name="password" id="id_password" required
+          class="shadow-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-1 focus:ring-[#FF9900]/50
+          {% if form.password.errors %}border-red-500{% endif %}"
+        />
+        {% for error in form.password.errors %}
+          <p class="text-red-600 text-sm mt-1">{{ error }}</p>
+        {% endfor %}
+      </div>
 
-        <div class="mb-2">
-            <label for="id_password" class="arial-hidden block text-gray-500 text-sm">Password</label>
-            <input type="password" name="password" id="id_password" required
-                class="shadow-sm appearance-none border-[1px] rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-1 focus:ring-[#FF9900]/50
-                {% if form.username.errors %}border-red-500{% endif %} "
-                />
-
-            {% for error in form.password.errors %}
-                <p class="text-red-600 text-sm mt-1">{{ error }}</p>
-            {% endfor %}
-        </div>
-
-        <button class="bg-[#FF9900] font-bold py-2 px-3  border-none outline-none rounded hover:bg-[#E68A00] cursor-pointer  text-white" type="submit">Login</button>
+      <button type="submit" class="bg-[#FF9900] font-bold py-2 px-3 rounded hover:bg-[#E68A00] cursor-pointer text-white border-none outline-none">
+        Login
+      </button>
     </form>
-    <p class="text-sm text-gray-600">Don't have an account? <a href="{% url 'shop:register' %}" class="text-[#FF9900] font-semibold hover:text-[#E68A00]">Sign Up</a></p> 
+
+    <p class="text-sm text-gray-600 my-8  mb-48 pt-4">
+      Don't have an account? 
+      <a href="{% url 'shop:register' %}" class="text-[#FF9900] font-semibold hover:text-[#E68A00]">Sign Up</a>
+    </p>
 
     {% if error_message %}
-        <div class="error">
-            <p class="text-sm">{{ error_message }}</p>
-        </div>
+      <div class="mt-4 text-red-600 text-sm">
+        <p>{{ error_message }}</p>
+      </div>
     {% endif %}
-</div>
-{% endblock %}
+  </div>
+
+ 
+
+</body>
+</html>

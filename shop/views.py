@@ -38,6 +38,10 @@ def cart(request):
     return render(request, 'shop/cart.html', {'cart_items': cart_items})
 
 
+@login_required
+def add_to_cart(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+
 
 @login_required
 def edit_product(request, product_id):
